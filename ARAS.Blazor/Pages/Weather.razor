@@ -1,5 +1,9 @@
 ﻿@page "/weather"
 @using ARAS.Shared
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
+
 @inject HttpClient Http
 
 <PageTitle>Weather</PageTitle>
@@ -42,6 +46,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("weatherforecast");
+        try
+        {
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("weatherforecast");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            // This will redirect the user to the consent screen
+            exception.Redirect();
+        }
     }
 }
