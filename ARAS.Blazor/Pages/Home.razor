@@ -1,34 +1,9 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @attribute [Authorize]
-
-@inject HttpClient Http
-@inject NavigationManager Navigation
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
-
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            // This API call requires the try-catch block
-            var response = await Http.PostAsync("api/Account/user", null);
-            if (!response.IsSuccessStatusCode)
-            {
-                // Handle potential API errors after consent is already granted
-            }
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            // This is the crucial part: it redirects the user to the
-            // Microsoft consent screen so they can grant permission.
-            exception.Redirect();
-        }
-    }
-}

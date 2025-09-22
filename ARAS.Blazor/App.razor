@@ -6,17 +6,7 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    @* By adding Context="authContext", we resolve the name collision. *@
-                    <AuthorizeView Context="authContext">
-                        <NotAuthorized>
-                            @* User is not authenticated at all *@
-                            <RedirectToLogin />
-                        </NotAuthorized>
-                        <Authorized>
-                            @* User is authenticated, but not authorized for this specific resource *@
-                            <p>You are not authorized to access this resource.</p>
-                        </Authorized>
-                    </AuthorizeView>
+                    <RedirectToLogin />
                 </NotAuthorized>
             </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
